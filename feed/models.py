@@ -1,3 +1,4 @@
 from django.db import models
 
-# Create your models here.
+class UserInput(models.Model):
+    topic = models.CharField(max_length=100)
