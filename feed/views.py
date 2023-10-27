@@ -35,40 +35,50 @@ def call_openai_api(api_key, user_message):
 		"temperature": 0.7
 	}
 
-	start_time = time.time()
-	response = requests.post(api_url, headers=headers, json=request_data, timeout=1000)
+	try:
+		start_time = time.time()
+		response = requests.post(api_url, headers=headers, json=request_data, timeout=1000)
+		response.raise_for_status()  # Raise an exception for non-2xx response codes
 
-	if time.time() - start_time > 10:
-		print("It is taking too much time")
+		if time.time() - start_time > 10:
+			print("It is taking too much time")
+	except requests.exceptions.RequestException as e:
+		print(f"Request failed with error: {e}")
+		return None
 
 	return response
 
 def handle_openai_response(response):
+	if response is None:
+		return "Error in the API request"
+
 	if response.status_code == 200:
 		result = response.json()
 		if "choices" in result and result["choices"]:
 			user_message = result["choices"][0]["message"]["content"]
 			print(user_message)
-			return(user_message)
+			return user_message
 		else:
 			print("Empty response or unexpected response structure.")
-			return("Empty response or unexpected response structure.")
-
+			return "Empty response or unexpected response structure."
 	else:
 		print(f"Request failed with status code: {response.status_code}")
 		print(response.text)
-		return(f"Request failed with status code: {response.status_code}")
+		return f"Request failed with status code: {response.status_code}"
 
 def core_render(request):
 	if request.method == 'POST':
 		form = UserInputForm(request.POST)
 		if form.is_valid():
-			user_prompt = form.cleaned_data['topic']
-			user_message = get_random_user_message(user_prompt)
+			topic = form.cleaned_data['topic']
+			prompt = get_random_user_message(topic)
 			openai_api_key = load_openai_api_key()
-			response = call_openai_api(openai_api_key, user_message)
+			response = call_openai_api(openai_api_key, prompt)
 			content = handle_openai_response(response)
-			return render(request, 'feed/feed.html', {'user_message': user_message, 'response': content})
+			return render(request, 'feed/feed.html', {'topic': topic, 'prompt': prompt, 'response': content})
 	else:
 		form = UserInputForm()
 	return render(request, 'feed/index.html', {'form': form})
+
+def feed_render(request):
+	return render(request, 'feed/feed.html', {'topic': 'undefined', 'prompt': 'undefined', 'response': 'undefined'})

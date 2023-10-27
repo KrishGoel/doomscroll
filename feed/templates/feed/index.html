@@ -1,7 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-	<form method="post" class="w-1/2 block mx-auto flex flex-col">
+<div class="w-1/2 block mx-auto flex flex-col">
+	<form method="post">
 		{% csrf_token %}
 		<label for="topic" class="block text-lg font-medium leading-6 text-gray-900 mb-4">Enter the topic you wish to learn about</label>
 		<div class="flex">
@@ -9,4 +10,5 @@
 			<button type="submit" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2">Learn!</button>
 		</div>
 	</form>
+</div>
 {% endblock %}

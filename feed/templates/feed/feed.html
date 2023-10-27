@@ -1,11 +1,9 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Result</title>
-</head>
-<body>
-    <h1>Generated Message:</h1>
-    <p>{{ user_message }}</p>
-	<p>{{ response }}</p>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+<div class="w-1/2 block mx-auto flex flex-col">
+        <h1 class="text-2xl font-bold">Personalised High Engagement Feed for {{ topic }}</h1>
+        <h2 class="text-xl font-semibold">Transcript</h2>
+        <p>{{ response }}</p>
+</div>
+{% endblock %}
