@@ -112,9 +112,9 @@ from moviepy.editor import VideoFileClip, AudioFileClip
 
 def generate_video(audio_path):
 	try:
-		random_number = random.randint(1, 1)
+		random_number = random.randint(1, 7)
 		video_path = VideoFileClip(f"static/videos/{random_number}.mp4")
-		audio_clip = AudioFileClip(audio_path)
+		audio_clip = AudioFileClip(f"static/{audio_path}")
 
 		final_video = video_path.set_audio(audio_clip)
 		final_video.write_videofile("static/output_video.mp4", codec="libx264", audio_codec="aac")
