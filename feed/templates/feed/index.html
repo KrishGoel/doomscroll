@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Input Form</title>
-</head>
-<body>
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Submit</button>
-    </form>
-</body>
-</html>
+{% extends "base.html" %}
+
+{% block content %}
+	<form method="post" class="w-1/2 block mx-auto flex flex-col">
+		{% csrf_token %}
+		<label for="topic" class="block text-lg font-medium leading-6 text-gray-900 mb-4">Enter the topic you wish to learn about</label>
+		<div class="flex">
+			{{ form.topic }}
+			<button type="submit" class="rounded-md bg-indigo-600 px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 ml-2">Learn!</button>
+		</div>
+	</form>
+{% endblock %}

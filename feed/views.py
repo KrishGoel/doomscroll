@@ -16,8 +16,8 @@ def get_random_user_message(user_prompt):
 	user_messages = [
 		f"Write a high-engagement Reddit TIFU (Today I Fucked Up) Post explaining {user_prompt} as the story of a dysfunctional {random.choice(['family', 'office', 'startup'])} dealing with {random.choice(['rogue AI', 'quantum computing', 'autonomous robots'])}. Focus on explaining {user_prompt} in this post through the story. Start your answer with a TL;DR.",
 		f"Write a high-engagement Reddit AITA (Am I The Asshole) Post explaining {user_prompt} as the dilemma of 2 friends, one of whom met a bizarre fate involving {random.choice(['time travel', 'nanobots', 'extraterrestrial encounters'])}. Focus on explaining {user_prompt} through the story. Start your answer with a TL;DR.",
+		f"Make a high-engagement Meme Tweet explaining {user_prompt} in the context of {random.choice(['AI uprising', 'cybersecurity breach', 'space exploration'])}.",
 		f"Write a high-engagement 4Chan Flash Post explaining {user_prompt} disguised as a story of a top-secret government {random.choice(['experiment', 'conspiracy', 'cover-up'])}.",
-		f"Make a high-engagement Meme Tweet explaining {user_prompt} in the context of {random.choice(['AI uprising', 'cybersecurity breach', 'space exploration'])}."
 	]
 	random_message = random.choice(user_messages)
 	print("Selected User Message:", random_message)
@@ -36,7 +36,7 @@ def call_openai_api(api_key, user_message):
 	}
 
 	start_time = time.time()
-	response = requests.post(api_url, headers=headers, json=request_data, timeout=30)
+	response = requests.post(api_url, headers=headers, json=request_data, timeout=1000)
 
 	if time.time() - start_time > 10:
 		print("It is taking too much time")
